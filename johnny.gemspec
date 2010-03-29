@@ -14,6 +14,9 @@ Gem::Specification.new do |s|
   s.description = %q{Watches directories and converts markdown documents to other formats through erb templates}
   s.email = %q{micheil@brandedcode.com}
   s.executables = ["johnny"]
+  s.extra_rdoc_files = [
+    "README.md"
+  ]
   s.files = [
     "README.md",
      "VERSION",
@@ -21,6 +24,7 @@ Gem::Specification.new do |s|
      "templates/default.html.erb"
   ]
   s.homepage = %q{http://github.com/miksago/johnny}
+  s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Watches directories and converts markdown documents to other formats}
@@ -31,14 +35,14 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<fssm>, [">= 0"])
-      s.add_runtime_dependency(%q<haml>, [">= 0"])
+      s.add_runtime_dependency(%q<rdiscount>, [">= 0"])
     else
       s.add_dependency(%q<fssm>, [">= 0"])
-      s.add_dependency(%q<haml>, [">= 0"])
+      s.add_dependency(%q<rdiscount>, [">= 0"])
     end
   else
     s.add_dependency(%q<fssm>, [">= 0"])
-    s.add_dependency(%q<haml>, [">= 0"])
+    s.add_dependency(%q<rdiscount>, [">= 0"])
   end
 end
 
