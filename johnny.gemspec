@@ -22,11 +22,15 @@ Gem::Specification.new do |s|
      "VERSION",
      "bin/johnny",
      "lib/johnny.rb",
-     "lib/johnny/command_line.rb",
+     "lib/johnny/command.rb",
+     "lib/johnny/config.rb",
+     "lib/johnny/converter.rb",
+     "lib/johnny/converters/html.rb",
+     "lib/johnny/converters/markdown.rb",
+     "lib/johnny/converters/sass.rb",
      "lib/johnny/rack.rb",
-     "lib/johnny/sass.rb",
-     "lib/johnny/template.rb",
      "lib/johnny/watcher.rb",
+     "templates/layout.html",
      "templates/layout.mu",
      "templates/style.sass"
   ]
@@ -41,13 +45,16 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<optparse>, [">= 0"])
       s.add_runtime_dependency(%q<fssm>, [">= 0"])
       s.add_runtime_dependency(%q<haml>, [">= 0"])
     else
+      s.add_dependency(%q<optparse>, [">= 0"])
       s.add_dependency(%q<fssm>, [">= 0"])
       s.add_dependency(%q<haml>, [">= 0"])
     end
   else
+    s.add_dependency(%q<optparse>, [">= 0"])
     s.add_dependency(%q<fssm>, [">= 0"])
     s.add_dependency(%q<haml>, [">= 0"])
   end
