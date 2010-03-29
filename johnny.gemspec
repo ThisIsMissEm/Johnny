@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
     "README.md",
      "VERSION",
      "bin/johnny",
+     "lib/johnny.rb",
      "templates/default.html.erb"
   ]
   s.homepage = %q{http://github.com/miksago/johnny}
