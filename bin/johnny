@@ -1,5 +1,60 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "lib", "johnny"))
+require "rubygems"
+require "fssm"
+require "rdiscount"
 
-Johnny::Command.new(ARGV).run!
+class Johnny
+  def initialize(dir=Dir.pwd)
+    @source = File.expand_path(dir)
+    @destination = File.join(@source, "html")
+    
+    unless File.exists?(@destination) && File.directory?(@destination)
+      Dir.mkdir(@destination)
+    end
+  end
+  
+  def handle(action, path)
+    if [".md", ".mdown", ".markdown"].include?(File.extname(path))
+      source = File.join(@source, path)
+      target = File.join(@destination, "#{File.basename(path, File.extname(path))}.html")
+      action = "handle_#{action}"
+      
+      if self.respond_to?(action)
+        self.send(action, source, target)
+      end
+    end
+  end
+  
+  
+  def handle_create(source, target)
+    puts "Create: #{target}"
+  end
+  
+  def handle_update(source, target)
+    puts "Update: #{target}"
+  end
+  
+  def handle_delete(source, target)
+    if File.exists?(target)
+      puts "Deleted: #{target}"
+      File.delete(target)
+    end
+  end
+  
+  def run!
+    # this is something I'd expect in javascript, not ruby.
+    johnny = self
+    
+    puts "Watching directory for changes to files..."
+    puts "-> Parsed files will be placed in: #{File.join(Dir.pwd, "html")}"
+    
+    FSSM.monitor(@source, "**/*.*") do
+      update {|base, relative| johnny.handle("update", relative) }
+      delete {|base, relative| johnny.handle("delete", relative) }
+      create {|base, relative| johnny.handle("create", relative) }
+    end
+  end
+end
+
+Johnny.new.run!
