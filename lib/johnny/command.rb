@@ -7,7 +7,7 @@ module Johnny
     attr_accessor :arguments
     
     def initialize(argv)
-      @commands = %w[init update watch]
+      @commands = %w[init update watch parse]
       @argv = argv
       parse!
     end
@@ -36,7 +36,7 @@ module Johnny
     def parse!
       args = parser.parse(@argv)
       @command = args.pop
-      @arguments = args
+      Johnny.config = Johnny::Config.new(args)
     rescue OptionParser::ParseError => e
       $stderr.puts "Error: Unknown Option: #{e.to_s.split(": ")[1]}"
       puts "--"
@@ -58,9 +58,7 @@ module Johnny
     end
     
     def init
-      puts "stub"
-      puts @arguments.join(", ")
-      puts @command
+      
     end
     
     def update
@@ -69,6 +67,10 @@ module Johnny
     
     def watch
       puts "stub"
+    end
+    
+    def parse
+      
     end
   end
 end

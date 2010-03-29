@@ -10,6 +10,7 @@ begin
     gem.email = "micheil@brandedcode.com"
     gem.homepage = "http://github.com/miksago/johnny"
     gem.author = "Micheil Smith"
+    gem.add_dependency "optparse"
     gem.add_dependency "fssm"
     gem.add_dependency "haml"
     gem.files = []
