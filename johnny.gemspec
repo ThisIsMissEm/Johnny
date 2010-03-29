@@ -14,24 +14,13 @@ Gem::Specification.new do |s|
   s.description = %q{Watches directories and converts markdown documents to other formats through erb templates}
   s.email = %q{micheil@brandedcode.com}
   s.executables = ["johnny"]
-  s.extra_rdoc_files = [
-    "README.md"
-  ]
   s.files = [
     "README.md",
      "VERSION",
      "bin/johnny",
-     "lib/johnny.rb",
-     "lib/johnny/command_line.rb",
-     "lib/johnny/rack.rb",
-     "lib/johnny/sass.rb",
-     "lib/johnny/template.rb",
-     "lib/johnny/watcher.rb",
-     "templates/layout.mu",
-     "templates/style.sass"
+     "templates/default.html.erb"
   ]
   s.homepage = %q{http://github.com/miksago/johnny}
-  s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Watches directories and converts markdown documents to other formats}

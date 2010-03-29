@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 require "rubygems"
+require "erb"
 require "fssm"
 require "rdiscount"
 
@@ -8,6 +9,8 @@ class Johnny
   def initialize(dir=Dir.pwd)
     @source = File.expand_path(dir)
     @destination = File.join(@source, "html")
+    
+    @template = ERB.new(File.read(File.expand_path(File.join(File.dirname(__FILE__), "..", "templates", "default.html.erb"))))
     
     unless File.exists?(@destination) && File.directory?(@destination)
       Dir.mkdir(@destination)
@@ -28,11 +31,17 @@ class Johnny
   
   
   def handle_create(source, target)
+    parse(source, target)
     puts "Create: #{target}"
+    
+    return true
   end
   
   def handle_update(source, target)
+    parse(source, target)
     puts "Update: #{target}"
+    
+    return true
   end
   
   def handle_delete(source, target)
@@ -54,6 +63,30 @@ class Johnny
       delete {|base, relative| johnny.handle("delete", relative) }
       create {|base, relative| johnny.handle("create", relative) }
     end
+    
+    return
+  end
+  
+  def parse(source, target)
+    File.open("#{target}", "w+") {|f|
+      f.write(@template.result(ERBTemplate.new(
+        File.basename(source, File.extname(source)),
+        RDiscount.new(File.read(source)).to_html
+      ).getBinding))
+    }
+    
+    return nil
+  end
+end
+
+class ERBTemplate
+  def initialize(title, content)
+    @title = title
+    @content = content
+  end
+  
+  def getBinding
+    return binding()
   end
 end
 
