@@ -1,3 +1,0 @@
-[submodule "vendor/fssm"]
-	path = vendor/fssm
-	url = git://github.com/ttilley/fssm.git
